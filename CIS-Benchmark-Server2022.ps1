@@ -3,12 +3,11 @@
 
 <#
     .SYNOPSIS
-    This script checks against all of the CIS_Microsoft_Windows_Server_2022_Benchmark_v1.0.0 benchmarks as outlined in their documentation
+        This script checks against all of the CIS_Microsoft_Windows_Server_2022_Benchmark_v1.0.0 benchmarks as outlined in their documentation
 
     .DESCRIPTION
-    This script currently checks if the registry key exists AND checks if the value is correct.
-    It only outputs to screen for now, but it is CSV friendly where you can copy/paste into an excel sheet, this will be updated in future versions.
-
+        This script currently checks if the registry key exists but does not yet check if the value is correct, this will be updated in future versions.
+        It only outputs to screen for now, but it is CSV friendly where you can copy/paste into an excel sheet, this will be updated in future versions.
 
     .REQUIREMENTS:
         - Script must be run as an Administrator
@@ -18,8 +17,9 @@
     .NOTES
 	    Version History:
 
-	    0.0.1 - 11/28/2022 - Michael de Blok
-                  - Initial build of script
+	    0.0.1 - 11/20/2022 - Michael de Blok
+              - Initial build of script
+
 
     .PARAMETER placeholder
     description to be added
@@ -35,7 +35,6 @@
     .\CIS-Benchmark-Server2022.ps1
 
 #>
-
 
 $ErrorActionPreference = "SilentlyContinue"
 $WarningPreference = "SilentlyContinue"

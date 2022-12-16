@@ -1021,8 +1021,8 @@ if ($var1 -ne $null) {Write-Host "YES;" -ForeGroundColor Green -NoNewLine} else 
 $var1 = $null
 Write-Host "18.9.45.15;(L1) Ensure 'Turn off Microsoft Defender AntiVirus' is set to 'Disabled'" -ForeGroundColor Cyan
 
-Write-Host "CHECK MANUALLY, " -ForeGroundColor White -BackGroundColor Blue -NoNewline
-Write-Host "18.9.45.4.1.1;(L1) Ensure 'Configure Attack Surface Reduction rules' is set to 'Enabled'	Please see recommendation 18.9.45.4.1.2." -ForeGroundColor White -BackGroundColor Blue
+Write-Host "CHECK MANUALLY;" -ForeGroundColor White -BackGroundColor Blue -NoNewline
+Write-Host "18.9.45.4.1.1;(L1) Ensure 'Configure Attack Surface Reduction rules' is set to 'Enabled'" -ForeGroundColor White -BackGroundColor Blue
 
 $var1 = Get-ItemPropertyValue HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Defender -Name AttackSurfaceReductionRules_ProviderSet
 if ($var1 -ne $null) {Write-Host "YES;" -ForeGroundColor Green -NoNewLine} else {Write-Host "NO;" -ForeGroundColor Red -NoNewLine}
