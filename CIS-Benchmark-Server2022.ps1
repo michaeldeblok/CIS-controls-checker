@@ -123,10 +123,10 @@ Write-Host "1.2.3; (L1) Ensure 'Reset account lockout counter after' is set to '
 
 
 $value = $null ; $valueToSet = $null
-$valueToSet = "Pre-Windows 2000 Compatible Access,*S-1-1-0,*S-1-5-9,*S-1-5-11,*S-1-5-32-544"
+$valueToSet = $null
 $Value = $secpolicy | where {$_ -like "*SeTrustedCredManAccessPrivilege = *"}
-$value = $value -replace "SeTrustedCredManAccessPrivilege = "
-if ($value -eq $valueToSet) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
+if ($value -ne $null) {$value = $value -replace "SeTrustedCredManAccessPrivilege = "}
+if ($value -eq $null) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
 Write-Host "2.2.1; (L1) Ensure 'Access Credential Manager as a trusted caller' is set to 'No One';Expected value was $($valueToSet), and value '$($value)' was found" -ForeGroundColor Cyan
 
 
@@ -379,15 +379,6 @@ $value = $value -replace "SeSystemProfilePrivilege = "
 if ($value -eq $valueToSet) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
 Write-Host "2.2.43; (L1) Ensure 'Profile system performance' is set to 'Administrators, NT SERVICE\WdiServiceHost';Expected value was $($valueToSet), and value '$($value)' was found" -ForeGroundColor Cyan
 
-
-<#
-$value = $null ; $valueToSet = $null
-$valueToSet = "*S-1-5-19,*S-1-5-20"
-$Value = $secpolicy | where {$_ -like "*SeUnsolicitedInputPrivilege = *"}
-$value = $value -replace "SeUnsolicitedInputPrivilege = "
-if ($value -eq $valueToSet) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
-Write-Host "2.2.44; (L1) Ensure 'Replace a process level token' is set to 'LOCAL SERVICE, NETWORK SERVICE';Expected value was $($valueToSet), and value '$($value)' was found" -ForeGroundColor Cyan
-#>
 
 $value = $null ; $valueToSet = $null
 $valueToSet = "*S-1-5-19,*S-1-5-20"
@@ -785,11 +776,11 @@ if ($value -eq $valueToSet) {Write-Host "YES; " -ForeGroundColor Green -NoNewLin
 Write-Host "2.3.11.5; (L1) Ensure 'Network security: Do not store LAN Manager hash value on next password change' is set to 'Enabled';Expected value was $($valueToSet), and value '$($value)' was found" -ForeGroundColor Cyan
 
 
-
-Write-Host "MANUAL CHECK; 2.3.11.6; (L1) Ensure 'Network security: Do not store LAN Manager hash value on next password change' is set to 'Enabled'" -ForeGroundColor Magenta
-
-
-
+$value = $null ; $valueToSet = $null
+$valueToSet = "1"
+$value = Get-ItemPropertyValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -Name ForceAutoLogoff
+if ($value -eq $valueToSet) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
+Write-Host "2.3.11.5; (L1) Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled';Expected value was $($valueToSet), and value '$($value)' was found" -ForeGroundColor Cyan
 
 
 $value = $null ; $valueToSet = $null
@@ -799,7 +790,7 @@ if ($value -eq $valueToSet) {Write-Host "YES; " -ForeGroundColor Green -NoNewLin
 Write-Host "2.3.11.7; (L1) Ensure 'Network security: LAN Manager authentication level' is set to 'Send NTLMv2 response only. Refuse LM & NTLM';Expected value was $($valueToSet), and value '$($value)' was found" -ForeGroundColor Cyan
 
 $value = $null ; $valueToSet = $null
-$valueToSet = "1"
+$valueToSet = "2"
 $value = Get-ItemPropertyValue "HKLM:\SYSTEM\CurrentControlSet\Services\LDAP" -Name LDAPClientIntegrity
 if ($value -eq $valueToSet) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
 Write-Host "2.3.11.8; (L1) Ensure 'Network security: LDAP client signing requirements' is set to 'Negotiate signing' or higher;Expected value was $($valueToSet), and value '$($value)' was found" -ForeGroundColor Cyan
@@ -1083,7 +1074,7 @@ $var = $auditpol | where {$_ -like "*User Account Management*"} | where {$_ -lik
 if ($var -ne $null) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
 Write-Host "17.2.6; (L1) Ensure 'Audit User Account Management' is set to 'Success and Failure' "  -ForeGroundColor Cyan
 
-$var = $auditpol | where {$_ -like "*PNP Activity*"} | where {$_ -like "*Success*"}
+$var = $auditpol | where {$_ -like "*Plug and Play Events*"} | where {$_ -like "*Success*"}
 if ($var -ne $null) {Write-Host "YES; " -ForeGroundColor Green -NoNewLine} else {Write-host "NO; " -ForeGroundColor Red -NoNewLine}
 Write-Host "17.3.1; (L1) Ensure 'Audit PNP Activity' is set to include 'Success' "  -ForeGroundColor Cyan
 
